@@ -1,4 +1,4 @@
-# PrivatePay GUI Wallet
+# New PrivatePay GUI Wallet
 
 This is a fork of the **Sumokoin GUI Wallet**: https://github.com/sumoprojects/SumoGUIWallet
 It is changed to be compatible with PrivatePay.
