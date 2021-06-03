@@ -18,20 +18,27 @@ html ="""
                 app_hub.on_new_wallet_show_info_event.connect(show_wallet_info);
                 app_hub.on_new_wallet_ui_reset_event.connect(reset_ui);
                 app_hub.on_new_wallet_update_processed_block_height_event.connect(update_processed_block_height);
+                app_hub.on_paste_seed_words_event.connect(function(text){
+                    $('#seed').val(text);
+                });
             }
             
             function create_new_wallet(){
-                app_hub.create_new_wallet('');
+                app_hub.create_new_wallet('', 0);
                 return false;
             }
             
             function restore_wallet(){
                 var seed = $('#seed').val();
+                var restore_height = $('#restore_height_txt').val();
                 seed = replaceAll(seed, "\\n", " ");
-                if(seed.length == 0 || seed.split(" ").length != 25)
-                    alert("Please paste 25 mnemonic seed words to above box", "Seed words required!");
-                else
-                    app_hub.create_new_wallet(seed);
+                if(seed.length == 0 || seed.split(" ").length != 26)
+                    alert("Please paste 26 mnemonic seed words to above box", "Seed words required!");
+                else{
+                    var h =  !isNaN(parseInt(restore_height)) ? parseInt(restore_height) : 0;
+                    if(h < 0) h = 0;
+                    app_hub.create_new_wallet(seed, h);
+                }
                 return false;
             }
             
@@ -78,8 +85,25 @@ html ="""
                 $('#wallet_info').hide();
             }
             
-            function update_processed_block_height(height){
-                $('#processed_block_height').html(height);
+            function update_processed_block_height(height, target_height){
+                var html = height;
+                if(target_height > 0 && target_height > height){
+                    sync_pct = target_height > 0 ? (height*100.0/target_height).toFixed(1) : 0;
+                    html = height + "/" + target_height + " (" + sync_pct + "%)";
+                }
+                $('#processed_block_height').html(html);
+            }
+            
+            function paste_seed(){
+                app_hub.paste_seed_words();
+                return false;
+            }
+            
+            function cancel_progress()
+            {
+                $('#btn_cancel_progress').disable(true);
+                app_hub.cancel_restore_wallet_progress();
+                $('#btn_cancel_progress').disable(false);
             }
             
         </script>
@@ -101,7 +125,7 @@ html ="""
                 background-color: #666;
                 color: #76A500;
                 background-position: center center;
-                font-family: "RoboReg", "Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
                 font-size: 14px;
                 margin: 0;
                 padding: 0;
@@ -176,9 +200,9 @@ html ="""
             
             .centered {
               position: fixed;
-              width: 350px;
+              width: 730px;
               top: 25%;
-              left: 30%;
+              left: 5%;
               text-align: center;
               /* bring your own prefixes */
               transform: translate(-50%, -50%);
@@ -233,11 +257,12 @@ html ="""
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h4>Restore Wallet</h4>
+                        <h4>Restore Wallet <small>(would take very long time)</small></h4>
                         <div class="form-group">
-                            <label for="seed">Mnemonic Seed:</label>
-                            <textarea id="seed" class="form-control" placeholder="Paste mnemonic seed (25 words) here" style="height:80px;margin-bottom:10px;font-size:100%"></textarea>
+                            <label for="seed">Mnemonic Seed:</label>    <button id="paste_seed_btn" type="button" class="btn btn-warning btn-sm" style="text-transform: none" onclick="paste_seed()"><i class="fa fa-paste"></i> Paste</button>
+                            <textarea id="seed" class="form-control" placeholder="Paste 25 mnemonic seed words here (use [Paste] button above or press Ctrl+V)" style="height:80px;margin-bottom:10px;margin-top:10px;font-size:100%"></textarea>
                             <button id="restore_wallet_btn" type="button" class="btn btn-primary" onclick="restore_wallet()"><i class="fa fa-undo"></i> Restore</button>
+                            <input id="restore_height_txt" type="text" class="form-control" style="display: inline-block; float:right; width: 100px" value="0"/> <label for="restore_height_txt" style="font-weight: bold; display:inline-block; float:right; margin-right:20px;">Restore from height#</label>
                         </div>
                     </div>
                 </div>
@@ -251,7 +276,7 @@ html ="""
                 </div>
                 <div class="row">
                     <div class="col-sm-12" style="background: transparent; text-align: center;">
-                        <button id="btn_cancel" type="button" class="btn btn-danger center" onclick="close_dialog()"><i class="fa fa-close"></i> Cancel</button>
+                        <button id="btn_cancel" type="button" class="btn btn-danger center" onclick="close_dialog()"><i class="fa fa-close"></i> Close</button>
                     </div>
                 </div>
             </div>
@@ -264,10 +289,10 @@ html ="""
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="wallet_address">Address</label>
-                            <input id="wallet_address" type="text" class="form-control address-box" style="color:#c7254e;" readonly="readonly" value="Se..."/>
+                            <input id="wallet_address" type="text" class="form-control address-box" style="color:#c7254e;" readonly="readonly" value="cash..."/>
                         </div>
                         <div class="form-group">
-                            <label for="wallet_seed_words">Mnemonic seed <code>(Important! Always backup this for wallet restoration)</code></label>
+                            <label for="wallet_seed_words">Mnemonic seed <code style="font-weight: bold;">(Important: Always backup these seed words for wallet restoration)</code></label>
                             <textarea id="wallet_seed_words" class="form-control address-box" style="height:70px;font-size:95%;color:#333" readonly="readonly"></textarea>
                         </div>
                         <div class="form-group">
@@ -291,9 +316,10 @@ html ="""
     <div id="progress">
         <div class="centered">
             <h3 id="progress_header">Creating/Restoring wallet...</h3>
-            <h5 id="processing_block">Processing blocks... Height#: <code id="processed_block_height">0</code></h5><br/><br/>
+            <h5 id="processing_block">Processing block#: <code id="processed_block_height">0</code></h5><br/><br/>
             <!--<img src="./images/ajax-loader2.gif" />-->
             <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+            <p style="margin-top: 140px"><button id="btn_cancel_progress" type="button" class="btn btn-warning center" onclick="cancel_progress()"><i class="fa fa-close"></i> Cancel</button></p> 
         </div>
     </div>
     </body>

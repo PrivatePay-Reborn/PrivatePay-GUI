@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-## Copyright (c) 2017, The Sumokoin Project (www.sumokoin.org)
+## Copyright (c) 2017-2018, The Sumokoin Project (www.sumokoin.org)
 '''
 Misc classes for app and wallet settings
 '''
-
+import os
 import json
 
-from settings import *
-from utils.common import *
+from settings import DATA_DIR
+from utils.common import makeDir, readFile, writeFile
 from utils.logger import log, LEVEL_DEBUG, LEVEL_ERROR, LEVEL_INFO
 
 config_path = os.path.join(DATA_DIR, 'config')
@@ -79,10 +79,16 @@ class WalletInfo():
         self.is_loaded = False
         self.top_tx_height = 0
         self.bc_height = -1
-        
+
+
+def set_default_settings(default_settings, settings):
+    for k, v in default_settings.iteritems():
+        settings.setdefault(k, v)
+        if type(v) is dict: set_default_settings(default_settings[k], settings[k])
         
 class AppSettings():
-    settings = {
+    settings = {}
+    default_settings = {
         "daemon": {
             "log_level": 0,
             "block_sync_size": 10
@@ -90,6 +96,11 @@ class AppSettings():
         
         "blockchain": {
             "height": 0,
+        },
+                
+        "application": {
+            "minimize_to_tray": True,
+            "enable_ssl": False,
         }
     }
     
@@ -101,11 +112,11 @@ class AppSettings():
         if os.path.exists(self.app_settings_filepath):
             try:
                 self.settings = json.loads(readFile(self.app_settings_filepath))
-                return True
             except Exception, err:
                 log("[AppSettings]>>> Load error:" + str(err), LEVEL_ERROR)
-                return False
-        return False
+                
+        # Set default values:
+        set_default_settings(self.default_settings, self.settings)
     
     def save(self):
         try:

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-## Copyright (c) 2017, The Sumokoin Project (www.sumokoin.org)
+## Copyright (c) 2017-2018, The Sumokoin Project (www.sumokoin.org)
 '''
 QSingleApplication is a wrapper class for creating single interface 
 of appliaction 
@@ -14,10 +14,11 @@ from PySide.QtCore import QIODevice, QTimer
 from PySide.QtNetwork import QLocalServer, QLocalSocket 
 
 from utils.common import getSockDir, makeDir
-from settings import DATA_DIR
+
+DATA_DIR = makeDir(os.path.join(getSockDir(), 'Privatepayremote'))
     
 class QSingleApplication(QApplication):
-    sock_file = 'electroneum_wallet_sock'
+    sock_file = 'privatepay_lite_wallet_sock'
     if sys.platform == 'win32':
         sock_file = "\\\\.\\pipe\\%s" % sock_file
     elif sys.platform == 'darwin':
@@ -42,7 +43,6 @@ class QSingleApplication(QApplication):
     def startApplication(self, first_start=True):
         self.m_server = QLocalServer()
         if self.m_server.listen(self.sock_file):
-            print( "Starting app..." )
             self.appMain.run()
         else:
             if not first_start:

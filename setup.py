@@ -1,9 +1,14 @@
-import sys
-from cx_Freeze import setup,Executable
+from cx_Freeze import setup, Executable
+from multiprocessing import Queue
+import os, sys
 
-setup(
-    name = "PrivatePay GUI",
-    version = "0.0.1",
-    options = {"build_exe": {"packages":["idna"]}},
-    description = "PrivatePay GUI Wallet",
-    executables = [Executable("wallet.py", base = "Win32GUI")])
+base = None
+if sys.platform == "win32":
+    base = "Win32GUI"
+
+build_exe_options = {"packages": ["os", "idna", "sys"], "excludes": ["tkinter"], "include_files":["Resources/icons/solace.ico"]}
+setup( name = "Solace Remore GUI Wallet",
+version = "0.0.1",
+description = "Solace Remote GUI Wallet for Linux",
+options = {"build_exe": build_exe_options},
+executables = [Executable("wallet.py", base=base, icon='Resources/icons/solace.ico')])

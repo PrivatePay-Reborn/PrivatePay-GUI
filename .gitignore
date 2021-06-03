@@ -76,7 +76,6 @@ install_manifest.txt
 .metadata
 .gradle
 bin/
-data/
 tmp/
 *.tmp
 *.bak
@@ -104,3 +103,13 @@ local.properties
 # TeXlipse plugin
 .texlipse
 .idea/
+
+# Project specific
+build
+windist*
+dist*
+*.spec
+*.nsi
+Resources/bin*
+Resources/images*
+Resources/www/*.html

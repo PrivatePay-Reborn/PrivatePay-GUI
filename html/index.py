@@ -11,16 +11,500 @@ html ="""
     <head>
         <link href="./css/bootstrap.min.css" rel="stylesheet">
         <link href="./css/font-awesome.min.css" rel="stylesheet">
-        <link href="./css/app.css" rel="stylesheet">
+        <style type="text/css">
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            
+            body {
+                -webkit-user-select: none;
+                user-select: none;
+              
+                cursor: default;
+                background-color: #fff;
+                color: #006CFF;
+                background-position: center center;
+                font-family: "RoboReg", "Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-size: 14px;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            
+            a, a:hover, a:active, a:focus {
+                text-decoration: none;
+                outline: 0;
+                cursor: default;
+            }
+            
+            a, a:active, a:focus{
+                color: #0042FF;
+            }
+            
+            a:hover{
+                color: #fff;
+            }
+            
+            .nav-tabs{
+                /*width: 760px;*/
+            }
+            .nav-tabs li{
+                width: 20%;
+                text-align: center;
+                font-size: 120%
+            }
+            
+            .container{
+                width: 760px;
+                padding: 0;
+                margin: 5px 0px 5px 20px;
+            }
+            
+            h3{
+                text-align: center;
+                margin-bottom: 1em;
+                font-size: 180%;
+            }
+                       
+                        
+            .tab-content{
+                font-size: 12px;
+            }
+            
+            .tab-content h3{
+                margin-top: 0;
+            }
+            
+            #balance_tab h4, #balance_tab h5{
+                color: #006CFF;
+            }
+            
+            #balance_tab h5 span{
+                color: #ccc;
+            }
+            
+            #settings_tab h3{
+                margin-top: 20px;
+                margin-bottom: 30px;
+            }
+            
+            .syncing{
+                font-size: 60%;
+            }
+            
+            .tab-content .tab-pane {    
+                position: relative;
+            }
+            
+            .form-horizontal .control-label{
+                text-align: left;
+            }
+                       
+            
+            .progress{
+                height: 22px;
+                text-align: center;
+                background: #ddd;
+            }
+            
+            #progress_bar_text_high{
+                font-size: 90%; 
+                display: none;
+            }
+            
+            #progress_bar_text_low{
+                font-size: 80%;
+                color: #c7254e;
+            }
+            
+            .control-label{
+                font-weight: bold;
+            }
+            
+            .tx-list{
+                color: #666;
+                margin-right: 20px;
+                font-weight: bold;
+            }
+            
+            .tx-list a{
+                cursor: pointer;
+            }
+            
+            .tx-list.tx-out, .tx-list.tx-in, .tx-list.tx-pool, .tx-list.tx-pending, .tx-list.tx-out a, .tx-list.tx-out a:active, .tx-list.tx-out a:focus{
+                color: #c7254e;
+                margin-bottom: 0;
+            }
+            
+            .tx-list.tx-in, .tx-list.tx-in a, .tx-list.tx-in a:active, .tx-list.tx-in a:focus{
+                color: green;
+            }
+            
+            .tx-list.tx-pool, .tx-list.tx-pending, .tx-list.tx-pending a, .tx-list.tx-pending a:active, .tx-list.tx-pending a:focus, .tx-list.tx-pool a, .tx-list.tx-pool a:active, .tx-list.tx-pool a:focus{
+                color: #B84173;
+            }
+            
+            .tx-list a:hover{
+                color: #0042FF;
+            }
+            
+            .tx-list.txid{
+                color: inherit;
+            }
+            
+            .tx-list.tx-payment-id{
+                font-weight: normal;
+            }
+            
+            .tx-fee-hide, .tx-note-hide, .tx-destinations-hide{
+                display: none;
+            }
+            
+            .tx-list.tx-lock{
+                color: #666;
+            }
+            
+            .modal-progress-text{
+                color: #333;
+                font-size: 90%;
+                font-weight: bold;
+                margin-left: 10px;
+            }
+            
+            #form_receive input, #form_send_tx input, #form_send_tx select{
+                font-size: 14px;
+            }
+            
+            .btn-sm{
+                border-radius: 0;
+            }
+            
+            table {
+                border-spacing: 0;
+                border-collapse: collapse;
+                font-size: 12px;
+            }
+            
+            table thead tr{
+                height: 3em;
+            }
+            
+            table tbody tr {
+                color: #aaa;
+                height: 3em;
+                line-height: 1.6em;
+            }
+            
+            table thead tr th{
+                text-align: left;
+                text-size: 18px;
+                padding: auto 1em;
+            }
+            
+            table tbody tr td a:hover{
+                color: #666;
+                cursor: pointer;
+            }
+            
+            .address-book-row{
+                cursor: pointer;
+            }
+            
+            #address-book-box{
+                max-height: 450px;
+            }
+            
+            #address-book-box table{
+                width: 100%;
+            }
+            
+            #address-book-box table thead {
+                display: inline-block;
+                width: 100%;
+            }
+            
+            #address-book-box table tbody {
+                border-top: none;
+                max-height: 300px;
+                display: inline-block;
+                width: 100%;
+                overflow: auto;
+            }
+            
+            #address-book-box table tbody::-webkit-scrollbar-track,
+                .tx-destinations::-webkit-scrollbar-track
+            {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                background-color: #F5F5F5;
+                border-radius: 6px;
+            }
+                       
+            
+            #address-book-box table tbody::-webkit-scrollbar,
+                .tx-destinations::-webkit-scrollbar
+            {
+                width: 8px;
+                background-color: #F5F5F5;
+                border-radius: 6px;
+            }
+            
+            .tx-destinations::-webkit-scrollbar{
+                height: 8px;
+            }
+            
+            #address-book-box table tbody::-webkit-scrollbar-thumb,
+                .tx-destinations::-webkit-scrollbar-thumb
+            {
+                border-radius: 6px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                background-color: #5BB0F7;
+            }
+            
+            .tx-destinations {
+                width: 100%;
+                max-height: 200px;
+                overflow: auto;
+                font-size: 90%;
+            }
+            
+            .wallet-settings{
+                text-align: center;
+            }
+            
+            .wallet-settings button{
+                margin-left: 15px;
+            }
+            .wallet-settings button:last-child{
+                margin-right: 15px;
+             }
+            }
+            
+            .form-control.address-box{
+                font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+                font-size: 85%;
+                color: #000;
+            }
+            
+            textarea{
+                border:none;
+                width:100%;
+                resize:none;
+                font-weight:bold;
+            }
+            
+            .panel-default>.panel-heading {
+              color: #666;
+              background-color: #eee;
+              border-color: #e4e5e7;
+              padding: 0;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+            }
+            
+            .panel-default>.panel-heading a {
+              display: block;
+              padding: 10px 15px;
+            }
+            
+            .panel-default>.panel-heading a:after {
+              font-family:'Glyphicons Halflings';
+              content: "";
+              position: relative;
+              top: 1px;
+              display: inline-block;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 1;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+              float: right;
+              transition: transform .25s linear;
+              -webkit-transition: -webkit-transform .25s linear;
+            }
+            
+            .panel-default>.panel-heading a[aria-expanded="true"] {
+              background-color: #919B9B;
+              color: #fff;
+              font-weight: bold;
+            }
+            
+            .panel-default>.panel-heading a[aria-expanded="false"] {
+                color: #666;
+            }
+            
+            .panel-default>.panel-heading a[aria-expanded="true"]:after {
+              content:"\e114";
+              
+            }
+            
+            .panel-default>.panel-heading a[aria-expanded="false"]:after {
+              content:"\e080";
+            }
+            
+            .panel-default > .panel-heading + .panel-collapse > .panel-body {
+                height: 295px;
+                overflow: auto;
+            }
+            
+            
+            .panel-default > .panel-heading + .panel-collapse > .panel-body::-webkit-scrollbar-track
+            {
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+                border-radius: 6px;
+                background-color: #F5F5F5;
+            }
+                       
+            
+            .panel-default > .panel-heading + .panel-collapse > .panel-body::-webkit-scrollbar
+            {
+                width: 8px;
+                background-color: #F5F5F5;
+            }
+                        
+            .panel-default > .panel-heading + .panel-collapse > .panel-body::-webkit-scrollbar-thumb
+            {
+                border-radius: 6px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+                background-color: #5BB0F7;
+            }
+            
+            #qrcode_dialog_body h3
+            {
+                font-size: 18px;
+                word-break: break-all;
+                margin: 0 15px 15px;
+                
+            }
+            
+            .identicon
+            {
+                width: 32px;
+                height: 32px;
+                box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+            }
+            .identicon canvas
+            {
+                width: 100%;
+                height: 100%;
+
+            }
+            .identicon[data-addr^='So'] canvas
+            {
+                /*outline: 2px solid blue;*/
+            }
+            
+            .identicon[data-addr^='Sa'] canvas
+            {
+                /*outline: 2px solid red;*/
+            }
+            #receive_address_identicon
+            {
+                position: absolute;
+                top: 0;
+                left: 15px;
+                width: 48px;
+                height: 48px;
+            }
+            #qrcode_dialog_body .identicon
+            {
+                margin: 0 auto;
+                width: 200px;
+                height: 200px;
+            }
+            
+            #paper_wallet_modal_dialog .modal-dialog
+            {
+                width: 768px;
+            }
+            #paper_wallet_modal_dialog .modal-footer
+            {
+                padding-top: 0;
+            }
+            #paper_wallet_model_body
+            {
+                padding: 0;
+            }
+            #paper_wallet
+            {
+                padding: 15px;
+                background: url(./images/paper-wallet.png) center left no-repeat;
+            }
+            #paper_wallet::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            #paper_wallet .qr_code_label
+            {
+                -webkit-transform: rotate(-90deg);
+                position: absolute;
+                bottom: 70px;
+                right: -50px;
+                width: 150px;
+                margin: 0;
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
+            #paper_wallet_info
+            {
+                margin-top: 15px;
+                line-height: 1.5em;
+            }
+            #paper_wallet_info strong
+            {
+                font-weight: normal;
+            }
+            #paper_wallet_info .monospace
+            {
+                font-family: "Lucida Console", Monaco, monospace;
+                overflow-wrap: break-word;
+            }
+            #paper_wallet_identicon
+            {
+                width: 48px;
+                height: 48px;
+                margin: 0 auto 5px;
+            }
+            #paper_wallet_identicon_text
+            {
+                font-size: 9px;
+                line-height: 1em;
+                text-align: justify;
+                position: absolute;
+            }			
+            
+            .modal-progress-subtext{
+                display: none;
+                background-color: #333;
+                color: white;
+                font-size: 80%;
+                font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+                padding: 2%;
+                height: 120px;
+            }
+            
+        </style>
         
         <script src="./scripts/jquery-1.9.1.min.js"></script>
         <script src="./scripts/bootstrap.min.js"></script>
         <script src="./scripts/mustache.min.js"></script>
         <script src="./scripts/jquery.qrcode.min.js"></script>
+		<script src="./scripts/blockies.min.js"></script>
         <script src="./scripts/utils.js"></script>
         <script type="text/javascript">
                                    
             function app_ready(){
+                app_hub.on_start_loading_wallet_event.connect(function(){
+                    show_app_progress("Updating wallet... This may take time. Be patient!");
+                });
+                
                 setTimeout(app_hub.load_app_settings, 2000);
                 app_hub.on_load_app_settings_completed_event.connect(function(app_settings_json){
                     var app_settings = $.parseJSON(app_settings_json);
@@ -28,6 +512,9 @@ html ="""
                     $('#daemon_log_level_' + log_level).prop('checked', true);
                     var block_sync_size = app_settings['daemon']['block_sync_size'];
                     $('#block_sync_size_' + block_sync_size).prop('checked', true);
+                    
+                    $('#minimize_to_tray_chk').prop('checked', app_settings['application']['minimize_to_tray']);
+                    //$('#enable_ssl_chk').prop('checked', app_settings['application']['enable_ssl']);
                 });
                 
                 app_hub.on_main_wallet_ui_reset_event.connect(function(){
@@ -44,9 +531,6 @@ html ="""
                     hide_progress();
                 });
                 
-	 app_hub.on_new_wallet_update_processed_block_height_event.connect(update_processed_block_height);
-
-		
                 app_hub.on_wallet_rescan_bc_completed_event.connect(function(){
                     rescan_spent_btn.disable(false);
                     rescan_bc_btn.disable(false);
@@ -120,21 +604,8 @@ html ="""
                         }
                         html += "</tbody></table></div>";
                     }
-                    var addButton = {};
                     
-                    if($('#send_address').val() != ""){
-                        addButton['addAddress'] = {
-                            'text': 'add current',
-                            'click': function(){
-                                var address = $('#send_address').val()
-                                var payment_id = $('#send_payment_id').val()
-                                app_hub.addAdress(address, payment_id, "");
-                            }
-                        };
-                    }
-                    
-                    show_app_dialog(html, addButton);
-                    
+                    show_app_dialog(html);
                     
                     $(".address-book-row").click(function() {
                         $("#send_address").val( $(this).data("address") );
@@ -161,7 +632,7 @@ html ="""
                     if(tx.hasOwnProperty('destinations')){
                         var destinations = tx['destinations'];
                         for(var i=0; i < destinations.length; i++ ){
-                            dest_html += '<li>Amount: <span class="tx-list tx-amount tx-' + tx['status'] + '">' + printMoney(destinations[i]['amount']/1000000000000) + "</span>Address: <strong>" + destinations[i]['address'] + "</strong></li>";
+                            dest_html += '<li>Amount: <span class="tx-list tx-amount tx-' + tx['status'] + '">' + printMoney(destinations[i]['amount']/10000000) + "</span>Address: <strong>" + destinations[i]['address'] + "</strong></li>";
                         }
                     }
                     
@@ -174,8 +645,8 @@ html ="""
                                                             'tx_fa_icon': tx['direction'] == "in" ? "mail-forward" : "reply",
                                                             'tx_id': tx['txid'],
                                                             'tx_payment_id': tx['payment_id'], 
-                                                            'tx_amount': printMoney(tx['amount']/1000000000000.),
-                                                            'tx_fee': printMoney(tx['fee']/1000000000000.),
+                                                            'tx_amount': printMoney(tx['amount']/10000000.),
+                                                            'tx_fee': printMoney(tx['fee']/10000000.),
                                                             'tx_fee_hide': tx['fee'] > 0 ? '' : 'tx-fee-hide',
                                                             'tx_date': dateConverter(tx['timestamp']),
                                                             'tx_time': timeConverter(tx['timestamp']),
@@ -213,7 +684,7 @@ html ="""
                             'tx_id': tx['txid'],
                             'tx_id_short': tx['txid'].substring(0, 26) + "...",
                             'tx_payment_id': tx['payment_id'].substring(0, 16),
-                            'tx_amount': printMoney(tx['amount']/1000000000000.),
+                            'tx_amount': printMoney(tx['amount']/10000000.),
                             'tx_height': tx['height'],
                             'cls_in_out': tx['status']
                         });
@@ -252,9 +723,38 @@ html ="""
                         show_app_dialog(html);
                     }
                 });
-                
+
+				+                app_hub.on_view_paper_wallet_completed_event.connect(function(ret){
+                    if(ret){
+                        var data = JSON.parse(ret);
+                        var paper_wallet_tmpl = $('#paper_wallet_tmpl').html();
+                        var paper_wallet_rendered = Mustache.render(paper_wallet_tmpl, data);
+                        show_paper_wallet_dialog(paper_wallet_rendered);
+                        $('#paper_wallet .public_address.qr_code').qrcode({width: 150,height: 150, text: data.address});
+                        $('#paper_wallet .view_key.qr_code').qrcode({width: 150,height: 150, text: data.view_key});
+                        $('#paper_wallet .spend_key.qr_code').qrcode({width: 150,height: 150, text: data.spend_key});
+                        $('#paper_wallet_identicon').makeIdenticon(data.address, {scale: 6});
+                    }
+                });
+            
                 app_hub.on_restart_daemon_completed_event.connect(function(){
                     hide_progress();
+                });
+                
+                setInterval(function(){
+                    app_hub.update_log();
+                }, 1000);
+                
+                app_hub.on_update_log_event.connect(function(log_text, height, target_height){
+                    //console.log(log_text);
+                    var msg = "";
+                    if( height > 0 && target_height > 0) msg += "<strong>Processing block# " + height + "/" + target_height + "</strong><br><br>";
+                    msg += log_text;
+                    update_app_progress_details(msg);
+                });
+                
+                app_hub.on_set_enable_ssl_checkbox_event.connect(function(status){
+                    $('#enable_ssl_chk').prop('checked', status);
                 });
             }
             
@@ -288,7 +788,6 @@ html ="""
                     if(sync_pct < 100){
                         progress_bar.addClass('progress-bar-striped')
                                                         .addClass('active');
-                        //show_app_progress('Waiting for network synchronization... Be patient! This can take (very) long time...');
                     }
                     else{
                         progress_bar.removeClass('progress-bar-striped')
@@ -343,8 +842,8 @@ html ="""
                                                             'tx_fa_icon': tx['direction'] == "in" ? "mail-forward" : "reply",
                                                             'tx_id': tx['txid'],
                                                             'tx_payment_id': tx['payment_id'], 
-                                                            'tx_amount': printMoney(tx['amount']/1000000000000.),
-                                                            'tx_fee': printMoney(tx['fee']/1000000000000.),
+                                                            'tx_amount': printMoney(tx['amount']/10000000.),
+                                                            'tx_fee': printMoney(tx['fee']/10000000.),
                                                             'tx_fee_hide': tx['fee'] > 0 ? '' : 'tx-fee-hide',
                                                             'tx_date': dateConverter(tx['timestamp']),
                                                             'tx_time': timeConverter(tx['timestamp']),
@@ -356,13 +855,6 @@ html ="""
                             recent_txs_div.append(tx_rendered);
                         }
                     }
-                    
-                    syncing.each(function(index, value){
-                        sync_pct < 100 ? $(this).show() : $(this).hide();
-                    });
-                    
-                    balance_span.css("color", sync_pct < 100 ? "#ccc" : "#666");
-                    unlocked_balance_span.css("color", sync_pct < 100 ? "#ccc" : "#666");
                     
                     disable_buttons(sync_pct < 100);
                                         
@@ -383,13 +875,64 @@ html ="""
                     if(current_address != wallet_info['address']){
                         current_address = wallet_info['address'];
                         receive_address.val(current_address);
-                        $('#receive_address_qrcode').html('');
-                        $('#receive_address_qrcode').qrcode({width: 220,height: 220, text: current_address});
+						$('#receive_address_identicon').makeIdenticon(current_address, {scale: 6});
                     }
                     
+                    var table_body = $('#table_new_subaddresses tbody');
+                    var new_subaddress_row_tmpl = $('#new_subaddress_row_tmpl').html();
+                    var new_subaddresses = wallet_info['new_subaddresses'];
+                    
+                    table_body.html('');
+                    
+                    for(var i=0; i < new_subaddresses.length; i++){
+                        var subaddress = new_subaddresses[i];
+                        var row_rendered = Mustache.render(new_subaddress_row_tmpl, 
+                            {   'address_index': subaddress['address_index'],
+                                'address' : subaddress['address'],
+                                'address_short' : subaddress['address'].substr(0, 70) + '...'
+                            });
+                        
+                            
+                        table_body.append(row_rendered);
+                    }
+					table_body.find('.identicon').makeIdenticon();
+                    
+                    table_body = $('#table_used_subaddresses tbody');
+                    var used_subaddress_row_tmpl = $('#used_subaddress_row_tmpl').html();
+                    var used_subaddresses = wallet_info['used_subaddresses'];
+                    
+                    table_body.html('');
+                    
+                    for(var i=0; i < used_subaddresses.length; i++){
+                        var subaddress = used_subaddresses[i];
+                        var row_rendered = Mustache.render(used_subaddress_row_tmpl, 
+                            {   'address_index': subaddress['address_index'],
+                                'address' : subaddress['address'],
+                                'address_short' : subaddress['address'].substr(0, 30) + '...',
+                                'balance': printMoney(subaddress['balance']),
+                                'unlocked_balance': printMoney(subaddress['unlocked_balance']),
+                                'row_font_weight': subaddress['address_index'] == 0 ? 'bold' : 'normal'
+                            });
+                        
+                            
+                        table_body.append(row_rendered);
+                    }
+					table_body.find('.identicon').makeIdenticon();
+                    
                     hide_app_progress();
+                    $('[data-toggle="tooltip"]').tooltip();
                     
                 }, 1);
+            }
+            
+            function show_qrcode(text){
+                $('#qrcode_dialog_body h3').html(text);
+                $('#qrcode_dialog_body .qr_code').html('');
+                $('#qrcode_dialog_body .qr_code').qrcode({width: 200,height: 200, text: text});
+                $('#qrcode_dialog_body .identicon').attr('data-addr', '');
+                $('#qrcode_dialog_body .identicon').makeIdenticon(text, {scale: 25});
+                $('#qrcode_dialog').modal('show');
+                
             }
             
             function disable_buttons(s){
@@ -397,6 +940,13 @@ html ="""
                 rescan_bc_btn.disable(s);
                 btn_send_tx.disable(s);
                 btn_fill_all_money.disable(s);
+                
+                syncing.each(function(index, value){
+                    s ? $(this).show() : $(this).hide();
+                });
+                
+                balance_span.css("color", s ? "#ccc" : "#666");
+                unlocked_balance_span.css("color", s ? "#ccc" : "#666");
             }
             
             function rescan_spent(){
@@ -410,7 +960,7 @@ html ="""
             function rescan_bc(){
                 rescan_spent_btn.disable(true);
                 rescan_bc_btn.disable(true);
-                show_progress("Rescan blockchain...");
+                show_app_progress("Rescan blockchain...");
                 app_hub.rescan_bc();
                 return false;
             }
@@ -447,8 +997,11 @@ html ="""
                     errors.push("Address is required!");
                     $('#send_address').parent().addClass('has-error');
                 }
-                else if(!(address.substr(0, 3) === "PPa" && address.length === 98) && !(address.substr(0, 3) === "PPi" && address.length === 109)){
-                    errors.push("Address is not valid, please try again! "+address.length);
+                else if(!((address.substr(0, 2) == "So" && address.length == 97) || 
+                    (address.substr(0, 2) == "Si"  && address.length == 109) || 
+                    (address.substr(0, 2) == "Sa"  && address.length == 98)))
+                {
+                    errors.push("Address is not valid!");
                     $('#send_address').parent().addClass('has-error');
                 }
                 else{
@@ -479,7 +1032,7 @@ html ="""
                 var mixin = $('#send_mixins').val();
                 
                 btn_send_tx.disable(true);
-                show_progress("Sending coins... This can take a while for big amount...");
+                show_progress("Sending coins...");
                 app_hub.send_tx(amount, address, payment_id, priority, mixin, tx_desc, $('#checkbox_save_address').is(":checked"), sweep_all);
                 return false;
             }
@@ -492,13 +1045,28 @@ html ="""
             
             function copy_address(){
                 $('#btn_copy_address').tooltip('show');
-                receive_address.select();
+                //receive_address.select();
                 app_hub.copy_text(receive_address.val());
                 setTimeout(function(){
                     $('#btn_copy_address').tooltip('hide');
                 }, 1000);
                 return false;
             }
+            
+            function qr_address(){
+                show_qrcode(receive_address.val());
+                return false;
+            }
+            
+            function copy_subaddress(el, subaddress_text){
+                $(el).tooltip('show');
+                app_hub.copy_text(subaddress_text);
+                setTimeout(function(){
+                    $(el).tooltip('hide');
+                }, 1000);
+                return false;
+            }
+            
             
             function copy_integrated_address(){
                 $('#btn_copy_integrated_address').tooltip('show');
@@ -537,7 +1105,12 @@ html ="""
                 app_hub.view_wallet_key(key_type);
                 return false;
             }
-            
+
+            function view_paper_wallet(){
+                app_hub.view_paper_wallet();
+                return false;
+            }
+                        
             function set_daemon_log_level(level){
                 console.log(level);
                 app_hub.set_daemon_log_level(level);
@@ -552,58 +1125,27 @@ html ="""
                 return false;
             }
             
-            function show_app_dialog(msg, buttons){
-                buttons = typeof buttons == "undefined" ? {} : buttons;
-                
+            function show_app_dialog(msg, title){
                 $('#app_model_body').css("color", "#666"); 
                 $('#app_model_body').html(msg);
-                
-                if($('#app_model_body').find('copied').length > 0 && !buttons['btn_copy']){
-                    buttons['btn_copy'] = {
-                        'text': 'Copy',
-                        'click': function(){
-                            copy_dialog_content()
-                        }
-                    };
-                }
-                
-                if(!buttons['close']){
-                    buttons['close'] = {
-                        'text': 'Close',
-                        click: function(){
-                            hide_app_dialog();
-                        },
-                        data: {
-                            'dismiss': 'modal'
-                        }
-                    };
-                }
-                
-                $('#app_modal_dialog .modal-footer').html("");
-                for(var buttonId in buttons){
-                    var buttonData = buttons[buttonId];
-                    var button = $('<button>')
-                            .prop("id", buttonId)
-                            .text(buttonData['text'])
-                            .prop('class', 'btn btn-primary')
-                    ;
-                    if(buttonData['data']){
-                        button.data(buttonData['data']);
-                    }
-                    if(buttonData['click']){
-                        button.click(buttonData['click']);
-                    }
-                    
-                    $('#app_modal_dialog .modal-footer').append(button);
-                }
-                
+                $('#btn_copy').text('Copy');
                 $('#app_modal_dialog').modal('show');
             }
             
             function hide_app_dialog(){
                 $('#app_modal_dialog').modal('hide');
             }
+
+            function show_paper_wallet_dialog(html){
+                $('#paper_wallet_model_body').css("color", "#666"); 
+                $('#paper_wallet_model_body').html(html);
+                $('#paper_wallet_modal_dialog').modal('show');
+            }
             
+            function hide_paper_wallet_dialog(){
+                $('#paper_wallet_modal_dialog').modal('hide');
+            }
+                        
             function show_alert(msg, title){
                 $('#app_model_body').css("color", "#c7254e"); 
                 $('#app_model_body').html(msg);
@@ -617,6 +1159,13 @@ html ="""
             
             function hide_app_progress(){
                 $('#app_modal_progress').modal('hide');
+            }
+            
+            function update_app_progress_details(msg){
+                if($('#app_modal_progress').is(':visible')){
+                    $('#app_modal_progress_subtext').show();
+                    $('#app_modal_progress_subtext').html(msg);
+                }
             }
             
             function show_progress(msg){
@@ -639,15 +1188,17 @@ html ="""
                 return false;
             }
             
-            function add_current_adress(){
-                app_hub.copy_text( $('#app_model_body .copied').text() );
-                $('#btn_copy').text('Copied');
-            }
             function copy_dialog_content(){
                 app_hub.copy_text( $('#app_model_body .copied').text() );
                 $('#btn_copy').text('Copied');
             }
- 
+
+            
+            function print_paper_wallet(){
+
+            }
+                
+            			
             $(document).ready(function(){
                 progress_bar_text_low = $('#progress_bar_text_low');
                 progress_bar_text_high = $('#progress_bar_text_high');
@@ -669,7 +1220,7 @@ html ="""
                 current_tx_history_page = 1;
                 
                 sync_pct = 0;
-                show_app_progress("Loading wallet... (Height: <span id='processed_block_height'></span>)");
+                //show_app_progress("Loading wallet... This can take time. Be patient!");
                 
                 receive_address = $('#receive_address');
                 receive_integrated_address = $("#receive_integrated_address");
@@ -703,71 +1254,110 @@ html ="""
                         }, 1);
                     }
                 });
+                
+                $("#minimize_to_tray_chk").change(function() {
+                    app_hub.change_minimize_to_tray(this.checked);
+                });
+                
+                $("#enable_ssl_chk").change(function() {
+                    app_hub.enable_ssl(this.checked);
+                });
             });
-	    function update_processed_block_height(height){
-	    $('#processed_block_height').html(height);
-	    }
         </script>
     </head>
     <body>
         <div class="container">
             <ul class="nav nav-tabs">
-			  <li class="active"><a data-toggle="tab" href="#balance_tab"><i class="fa fa-money"></i> Wallet</a></li>
               <li><a data-toggle="tab" href="#receive_tab"><i class="fa fa-arrow-circle-o-down"></i> Receive</a></li>
+              <li class="active"><a data-toggle="tab" href="#balance_tab"><i class="fa fa-money"></i> Wallet</a></li>
               <li><a data-toggle="tab" href="#send_tab"><i class="fa fa-send-o"></i> Send</a></li>
-              <li><a data-toggle="tab" href="#tx_history_tab"><i class="fa fa-history"></i> Transactions</a></li>
+              <li><a data-toggle="tab" href="#tx_history_tab"><i class="fa fa-history"></i> TX History</a></li>
               <li><a data-toggle="tab" href="#settings_tab"><i class="fa fa-cogs"></i> Settings</a></li>
             </ul>
             <div class="tab-content" style="height:490px; margin-top:20px;">
                 <div id="receive_tab" class="tab-pane fade">
                     <h3>RECEIVE</h3>
                     <form id="form_receive" class="form-horizontal">
+					<div id="receive_address_identicon" class="identicon"></div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <label for="receive_address" class="col-xs-2 control-label">Address</label>
+                                <label for="receive_address" class="col-xs-2 control-label">Main Address</label>
                                 <div class="col-xs-10 input-group" style="padding-left: 15px; padding-right: 15px;">
                                     <input id="receive_address" type="text" class="form-control" style="font-weight: bold" maxlength="64" readonly />
                                     <span class="input-group-btn">
                                         <button id="btn_copy_address" class="btn btn-primary btn-sm" style="text-transform: none" type="button" tabindex="-1" onclick="copy_address()" data-toggle="tooltip" data-placement="bottom" data-trigger="manual" title="Address copied"><i class="fa fa-copy"></i></button>
+                                        <button id="btn_qr_address" class="btn btn-primary btn-sm" style="text-transform: none" type="button" tabindex="-1" onclick="qr_address()" title="Show QR code"><i class="fa fa-qrcode"></i></button>
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="receive_payment_id" class="col-xs-2 control-label">Payment ID</label>
-                                <div class="col-xs-10 input-group" style="padding-left: 15px; padding-right: 15px;">
-                                    <input id="receive_payment_id" type="text" class="form-control" placeholder="16 hexadecimal characters" maxlength="16"/>
-                                    <span class="input-group-btn">
-                                        <button id="btn_generate_payment_id" class="btn btn-primary btn-sm"  style="text-transform: none" type="button" tabindex="-1" onclick="generate_payment_id()">Generate Payment ID</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="receive_integrated_address" class="col-xs-2 control-label">Integrated address</label>
-                                <div class="col-xs-10 input-group" style="padding-left: 15px; padding-right: 15px;">
-                                    <input id="receive_integrated_address" type="text" class="form-control" style="font-weight: bold" maxlength="110" readonly/>
-                                    <span class="input-group-btn">
-                                        <button id="btn_copy_integrated_address" class="btn btn-primary btn-sm"  style="text-transform: none" type="button" tabindex="-1" onclick="copy_integrated_address()" data-toggle="tooltip" data-placement="bottom" data-trigger="manual" title="Address copied" disabled><i class="fa fa-copy"></i></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="receive_address_qrcode" style="text-align:center">
                         </div>
                     </form>
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="margin-left: 15px; margin-right: 15px;">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                              Used Addresses
+                            </a>
+                          </h4>
+                          </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table id="table_used_subaddresses" class="table table-hover table-striped table-condensed">
+                                        <thead>
+                                            <tr>
+												<th></th>
+                                                <th>Address</th>
+                                                <th style="text-align: right">Balance</th>
+                                                <th style="text-align: right">Unlocked</th>
+                                                <th style="text-align: right">Index</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                              New (Ghost) Addresses
+                            </a>
+                          </h4>
+                          </div>
+                          <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body" style="overflow: auto">
+                                <div class="table-responsive">
+                                    <table id="table_new_subaddresses" class="table table-hover table-striped table-condensed">
+                                        <thead>
+                                            <tr>
+												<th></th>
+                                                <th>Address</th>
+                                                <th style="text-align: right">Index</th>
+                                                <th>&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="balance_tab" class="tab-pane fade in active">
-				<a href="javascript:open_link('https://twitter.com/pay_private')">
-				</a>
-				<h3>BALANCE</h3>
+                    <h3>BALANCE</h3>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="col-xs-6">
-                                <h5><font color="#E7644F"><i class="fa fa-fw fa-balance-scale" style="color:#E7644F;"></i> Balance:</font></h5>
-                                <h5><font color="#E7644F"><i class="fa fa-fw fa-unlock" style="color:#E7644F;"></i> Unlocked Balance:</font></h5>
+                                <h5><i class="fa fa-fw fa-balance-scale"></i> Balance:</h5>
+                                <h5><i class="fa fa-fw fa-unlock"></i> Unlocked Balance:</h5>
                             </div>
                             <div class="col-xs-6" style="text-align:right">
                                 <h5><span id="balance">0.000000000000</span> <small>XPP</small> <span class="syncing"> (syncing)</span></h5>
@@ -804,7 +1394,7 @@ html ="""
                                 <div class="col-sm-12">
                                     <label for="send_address" class="col-xs-2 control-label">Address</label>
                                     <div class="col-xs-10 input-group" style="padding-left: 15px; padding-right: 15px;">
-                                        <input id="send_address" type="text" class="form-control"  placeholder="Paste receiving address here..." maxlength="110"/>
+                                        <input id="send_address" type="text" class="form-control"  placeholder="Paste receiving address here (Ctrl+V)..." maxlength="110"/>
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary btn-sm" style="text-transform: none" type="button" tabindex="-1" onclick="show_address_book()">
                                                 <i class="fa fa-address-book"></i> Address book...
@@ -817,7 +1407,7 @@ html ="""
                                 <div class="col-sm-12">
                                     <label for="send_payment_id" class="col-xs-2 control-label">Payment ID</label>
                                     <div class="col-xs-10">
-                                        <input id="send_payment_id" type="text" class="form-control"  placeholder="Paste payment ID here (optional)..." maxlength="64"/>
+                                        <input id="send_payment_id" type="text" class="form-control"  placeholder="Paste payment ID here (Ctrl+V, optional)..." maxlength="64"/>
                                     </div>
                                 </div>
                             </div>
@@ -834,15 +1424,10 @@ html ="""
                                     <label for="send_mixins" class="col-xs-4 control-label">Privacy <sup>1</sup></label>
                                     <div class="col-xs-8">
                                         <select id="send_mixins" class="form-control">
-                                          <option value="0">0 mixins</option>
-                                          <option value="2">2 mixins</option>
-                                          <option value="4">4 mixins</option>
-                                          <option value="8">8 mixins</option>
-                                          <option value="10">10 mixins</option>
-                                          <option value="12" selected>12 mixins</option>
-                                          <option value="15">15 mixins</option>
-                                          <option value="18">18 mixins</option>
-                                          <option value="24">24 mixins</option>
+                                          <option value="2" selected>2 mixins (default)</option>
+                                          <option value="6">6 mixins</option>
+                                          <option value="12">12 mixins</option>
+                                          <option value="20">20 mixins</option>
                                           <option value="36">36 mixins</option>
                                           <option value="48">48 mixins</option>
                                           <option value="60">60 mixins</option>
@@ -914,106 +1499,29 @@ html ="""
                     <h3>WALLET</h3>
                     <div class="row">
                         <div class="col-sm-12 wallet-settings">
-                            <button id="btn_new_wallet" type="button" class="btn btn-primary" onclick="open_new_wallet()"><i class="fa fa-file"></i> New Wallet...</button>
-                            <button id="btn_view_seed" type="button" class="btn btn-primary" onclick="view_wallet_key('mnemonic')"><i class="fa fa-eye"></i> Mnemonic Seed...</button>
-                            <button id="btn_view_viewkey" type="button" class="btn btn-primary" onclick="view_wallet_key('view_key')"><i class="fa fa-key"></i> Viewkey...</button>
-                            <button id="btn_view_spendkey" type="button" class="btn btn-primary" onclick="view_wallet_key('spend_key')"><i class="fa fa-key"></i> Spendkey...</button>
+                            <button id="btn_new_wallet" type="button" class="btn btn-primary" onclick="open_new_wallet()"><i class="fa fa-file"></i> New Wallet</button>
+                            <button id="btn_view_seed" type="button" class="btn btn-primary" onclick="view_wallet_key('mnemonic')"><i class="fa fa-eye"></i> Mnemonic Seed</button>
+                            <button id="btn_view_viewkey" type="button" class="btn btn-primary" onclick="view_wallet_key('view_key')"><i class="fa fa-key"></i> Viewkey</button>
+                            <button id="btn_view_spendkey" type="button" class="btn btn-primary" onclick="view_wallet_key('spend_key')"><i class="fa fa-key"></i> Spendkey</button>
+                           
                         </div>
                     </div>
                     <hr style="margin-top:20px;margin-bottom:10px;">
-                    <h3>DAEMON</h3>
+                    <h3>APPLICATION</h3>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="col-sm-5">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-xs-4 control-label">Log level:</label>
-                                        <div class="col-xs-8">
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_log_level" id="daemon_log_level_0" value="0" onclick="set_daemon_log_level(0)" checked="">
-                                                Level 0 (default)
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_log_level" id="daemon_log_level_1" value="1" onclick="set_daemon_log_level(1)">
-                                                Level 1
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_log_level" id="daemon_log_level_2" value="2" onclick="set_daemon_log_level(2)">
-                                                Level 2
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_log_level" id="daemon_log_level_3" value="3" onclick="set_daemon_log_level(3)">
-                                                Level 3
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_log_level" id="daemon_log_level_4" value="4" onclick="set_daemon_log_level(4)">
-                                                Level 4
-                                              </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-7">
-                                <form class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-xs-4 control-label">Block sync size:</label>
-                                        <div class="col-xs-8">
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_block_sync_size" id="block_sync_size_10" value="10" onclick="set_block_sync_size(10)" checked="">
-                                                10 (default, for slow network)
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_block_sync_size" id="block_sync_size_20" value="20" onclick="set_block_sync_size(20)">
-                                                20 (for normal network)
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_block_sync_size" id="block_sync_size_50" value="50" onclick="set_block_sync_size(50)">
-                                                50 (for good network)
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_block_sync_size" id="block_sync_size_100" value="100" onclick="set_block_sync_size(100)">
-                                                100 (for better network)
-                                              </label>
-                                            </div>
-                                            <div class="radio">
-                                              <label>
-                                                <input type="radio" name="daemon_block_sync_size" id="block_sync_size_200" value="200" onclick="set_block_sync_size(200)">
-                                                200 (for great network)
-                                              </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-12 wallet-settings" style="margin-top: 10px; text-align:center;">
-                                <!--<label style="color:#999;font-size:90%">1. Daemon settings will come effective next time you start wallet</label><br/>
-                                <label style="color:#999;font-size:90%">2. Daemon log-level above [0] shoud be set only for debugging purpose</label>-->
-                                <button id="btn_restart_daemon" type="button" class="btn btn-primary" onclick="restart_daemon()"><i class="fa fa-refresh"></i> Restart Daemon</button>
-                                <button id="btn_view_log" type="button" class="btn btn-primary" onclick="app_hub.view_daemon_log()"><i class="fa fa-file"></i> View Log...</button>
-                            </div>
+                        <div class="col-sm-12 form-group" style="margin-bottom: 10px;text-align: center">
+                              <input id="minimize_to_tray_chk" type="checkbox" value="" checked="checked"> <label class="control-label" for="minimize_to_tray_chk">Close wallet to notification area (system tray)</label>
                         </div>
                     </div>
-                    <hr style="margin-top:10px;margin-bottom:10px;">
+                    <!--<div class="row">
+                        <div class="col-sm-12 form-group" style="margin-bottom: 10px;text-align: center">
+                              <input id="enable_ssl_chk" type="checkbox" value=""> <label class="control-label" for="enable_ssl_chk">Enable SSL connection*</label>
+                        </div>
+                    </div>-->
                     <div class="row">
-                        <div class="col-sm-12" style="margin-top: 10px;text-align: center">
+                        <div class="col-sm-12 wallet-settings" style="margin-top: 10px;text-align: center">
                             <button id="btn_about" type="button" class="btn btn-primary" onclick="about_app()"><i class="fa fa-user"></i> About...</button>
+                            <button id="btn_view_log" type="button" class="btn btn-primary" onclick="app_hub.view_wallet_rpc_log()"><i class="fa fa-file"></i> View Log...</button>
                         </div>
                     </div>
                 </div>
@@ -1025,17 +1533,31 @@ html ="""
                 <span id="progress_bar_text_low"><i class="fa fa-flash"></i>&nbsp;&nbsp;Connecting to network...</span>
             </div>
         </div>
-	
         
         <div class="modal" id="app_modal_dialog" style="z-index: 100000;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body" id="app_model_body"></div>
                     <div class="modal-footer">
+                        <button id="btn_copy" type="button" class="btn btn-primary" onclick="copy_dialog_content()">Copy</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal" id="paper_wallet_modal_dialog" style="z-index: 100000;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" id="paper_wallet_model_body"></div>
+                    <div class="modal-footer">
+                        <button id="btn_print" type="button" class="btn btn-primary" onclick="print_paper_wallet()">Print</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         
         <div class="modal" id="sending_modal_progress" style="z-index: 100001;" data-backdrop="static">
             <div class="modal-dialog">
@@ -1052,23 +1574,48 @@ html ="""
                     <div class="modal-body">
                         <p><span id="app_modal_progress_text" class="modal-progress-text"></span><p>
                         <!--<p style="text-align: center"><img src="./images/ajax-loader2.gif"/></p>-->
-                        <p style="text-align: center"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></p> 
+                        <p style="text-align: center"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></p>
+                        <div id="app_modal_progress_subtext" class="modal-progress-subtext"> </div>
                     </div>
                 </div>
             </div>
         </div>
         
+        <div class="modal" id="qrcode_dialog" style="z-index: 100003;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="text-align:center" id="qrcode_dialog_body">
+                        <h3></h3>
+                        <div class="col-sm-6 text-center">
+                            <div class="identicon"></div>
+                            <div>Always look for this icon when sending to this wallet.</div>
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <div class="qr_code"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <script id="recent_tx_row_templ" type="x-tmpl-mustache">
             <div class="col-sm-12">
                 <div class="col-xs-10" style="padding-right:0">
-                    <p class="tx-list tx-{{cls_in_out}}"><i class="fa fa-{{ tx_fa_icon }}"></i> ({{tx_direction}}) <span class="tx-list txid"><a href="javascript:open_link('https://explorer.goprivatepay.com/tx/{{ tx_id }}')" title="View on blockchain explorer">{{ tx_id }}</a></span></p>
+                    <p class="tx-list tx-{{cls_in_out}}"><i class="fa fa-{{ tx_fa_icon }}"></i> ({{tx_direction}}) <span class="tx-list txid"><a href="javascript:open_link('https://explorer.privatepay.online/tx/{{ tx_id }}')" title="View on blockchain explorer">{{ tx_id }}</a></span></p>
                     Payment ID: <span class="tx-list tx-payment-id">{{ tx_payment_id }}</span><br/>
                     Height: <span class="tx-list tx-height">{{ tx_height }}</span>  Date: <span class="tx-list tx-date">{{ tx_date }}</span> Time: <span class="tx-list tx-time">{{ tx_time }}</span> Status: <span class="tx-list tx-status">{{ tx_status }}</span><br/>
                     <p style="font-size:140%">Amount: <span class="tx-list tx-{{cls_in_out}} tx-amount {{tx_lock_cls}}">{{{tx_lock_icon}}}{{ tx_amount }}</span> <span class="{{ tx_fee_hide }}">Fee:</span> <span class="tx-list tx-{{cls_in_out}} tx-fee {{ tx_fee_hide }}">{{ tx_fee }}</span></p> 
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-primary btn-sm" onclick="view_tx_detail('{{ tx_height }}', '{{ tx_id }}')">Details</button>
+                    <button class="btn btn-warning" onclick="view_tx_detail('{{ tx_height }}', '{{ tx_id }}')">Details</button>
                 </div>
                 <br clear="both"/><hr style="margin: 0 0 10px"/>
             </div>
@@ -1076,7 +1623,7 @@ html ="""
         
         <script id="tx_detail_templ" type="x-tmpl-mustache">
             <p class="tx-list tx-{{cls_in_out}}" style="font-size: 90%"><i class="fa fa-{{ tx_fa_icon }}"></i> {{tx_direction}}<br>
-                <span class="tx-list txid"><a href="javascript:open_link('https://explorer.goprivatepay.com/tx/{{ tx_id }}')" title="View on blockchain explorer">{{ tx_id }}</a></span>
+                <span class="tx-list txid"><a href="javascript:open_link('https://explorer.privatepay.online/tx/{{ tx_id }}')" title="View on blockchain explorer">{{ tx_id }}</a></span>
             </p>
             <ul style="font-size: 90%">
                 <li>Payment ID: <span class="tx-list tx-payment-id">{{ tx_payment_id }}</span></li>
@@ -1084,7 +1631,6 @@ html ="""
                 <li>Status: <span class="tx-list tx-status">{{ tx_status }}</span></li>
                 <li>Amount: <span class="tx-list tx-{{cls_in_out}} tx-amount {{tx_lock_cls}}">{{{tx_lock_icon}}}{{ tx_amount }}</span> <span class="{{ tx_fee_hide }}">Fee:</span> <span class="tx-list tx-{{cls_in_out}} tx-fee {{ tx_fee_hide }}">{{ tx_fee }}</span></li>
                 <li class="{{ tx_note_hide }}">Tx Note: <span class="tx-list tx-note">{{ tx_note }}</span></li>
-				
             </ul>
             <div class="tx-destinations {{ tx_destinations_hide }}">
                 <span style="margin-left:10px;">Destination(s):</span>
@@ -1111,7 +1657,7 @@ html ="""
                 <td>{{ tx_id_short }}</td>
                 <td>{{ tx_payment_id }}</td>
                 <td align="right">{{ tx_amount }}</td>
-                <td><button class="btn btn-primary btn-sm" onclick="view_tx_detail('{{ tx_height }}', '{{ tx_id }}')">Details</button></td>
+                <td><button class="btn btn-default btn-sm" onclick="view_tx_detail('{{ tx_height }}', '{{ tx_id }}')">Details</button></td>
             </tr>
         </script>
         
@@ -1128,7 +1674,83 @@ html ="""
                 </a>
             </li>
         </script>
-	
+        
+        <script id="new_subaddress_row_tmpl" type="x-tmpl-mustache">
+            <tr class="" style="font-weight: normal;color:#333;">
+			<td><div class="identicon" data-addr="{{ address }}"></div></td>
+                <td>{{ address_short }}</td>
+                <td align="right">{{ address_index }}</td>
+                <td align="right">
+                    <button class="btn btn-primary btn-sm" tabindex="-1" onclick="copy_subaddress(this, '{{ address }}')" data-toggle="tooltip" data-placement="bottom" data-trigger="manual" title="Address copied"><i class="fa fa-copy"></i></button>
+                    <button class="btn btn-primary btn-sm" tabindex="-1" onclick="show_qrcode('{{ address }}')" title="Show QR code"><i class="fa fa-qrcode"></i></button>    
+                </td>
+            </tr>
+        </script>
+        
+        <script id="used_subaddress_row_tmpl" type="x-tmpl-mustache">
+            <tr class="" style="font-weight:{{ row_font_weight }};color:#333;">
+				<td><div class="identicon" data-addr="{{ address }}"></div></td>
+                <td>{{ address_short }}</td>
+                <td align="right">{{ balance }}</td>
+                <td align="right">{{ unlocked_balance }}</td>
+                <td align="right">{{ address_index }}</td>
+                <td align="right">
+                    <button class="btn btn-primary btn-sm" tabindex="-1" onclick="copy_subaddress(this, '{{ address }}')" data-toggle="tooltip" data-placement="bottom" data-trigger="manual" title="Address copied"><i class="fa fa-copy"></i></button>
+                    <button class="btn btn-primary btn-sm" tabindex="-1" onclick="show_qrcode('{{ address }}')" title="Show QR code"><i class="fa fa-qrcode"></i></button>    
+                </td>
+            </tr>
+        </script>
+        
+        <script id="paper_wallet_tmpl" type="x-tmpl-mustache">
+            <div id="paper_wallet">
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-10">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="public_address qr_code"></div>
+                            <p class="qr_code_label">Your Address</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="view_key qr_code"></div>
+                            <p class="qr_code_label">View Key</p>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="spend_key qr_code"></div>
+                            <p class="qr_code_label">Spend Key</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="paper_wallet_info" class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <p>
+                                        <strong>Your Address:</strong><br/>
+                                        <span class="monospace">{{ address }}</span>
+                                    </p>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div id="paper_wallet_identicon" class="identicon"></div>
+                                    <div id="paper_wallet_identicon_text">Always look for this icon when sending to this wallet.</div>
+                                </div>
+                            </div>
+                            <p>
+                                <strong>View Key:</strong><br/>
+                                <span class="monospace">{{ view_key }}</span>
+                            </p>
+                            <p>
+                                <strong>Spend Key:</strong><br/>
+                                <span class="monospace">{{ spend_key }}</span>
+                            </p>
+                            <p>
+                                <strong>Seed Words:</strong><br/>
+                                <span class="monospace">{{ seed }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
     </body>
 </html>
 """

@@ -22,28 +22,30 @@ file_hashes = [
         ('www/scripts/bootstrap.min.js', '2979f9a6e32fc42c3e7406339ee9fe76b31d1b52059776a02b4a7fa6a4fd280a'),
         ('www/scripts/mustache.min.js', '3258bb61f5b69f33076dd0c91e13ddd2c7fe771882adff9345e90d4ab7c32426'),
         ('www/scripts/jquery.qrcode.min.js', 'f4ccf02b69092819ac24575c717a080c3b6c6d6161f1b8d82bf0bb523075032d'),
-        ('www/scripts/utils.js', 'd0c6870ed19c92cd123c7443cb202c7629f9cd6807daed698485fda25214bdb4'),
-		('www/scripts/utils.js', 'd4c41bb763646490b40a0cf50c8f3425e1f9342264a22d9ec96112e68979f5ff'),
+        ('www/scripts/blockies.min.js', '7d51de4d3843ea8ce29b55f76a92be3411aaed3a37f4bb90d8fd6562c2b612c1'),
+        ('www/scripts/utils.js', 'c76f5aafe278fc60cb213fa0739ffc888ce1bf0e58f6f5bc24f3fc3544256136'),
         
-        ('www/css/bootstrap.min.css', '2e4ceda16bdb9f59b01ee01552e8a353ee7cc4e4ebac7d51413106094384ef37'),
+        ('www/css/bootstrap.min.css', '9d517cad6f1744ab5eba382ccf0f53969f7d326e1336a6c2771e82830bc2c5ac'),
         ('www/css/font-awesome.min.css', 'b8b02026a298258ce5069d7b6723c2034058d99220b6612b54bc0c5bf774dcfb'),
         
         ('www/css/fonts/fontawesome-webfont.ttf', '7b5a4320fba0d4c8f79327645b4b9cc875a2ec617a557e849b813918eb733499'),
         ('www/css/fonts/glyphicons-halflings-regular.ttf', 'e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456'),
         ('www/css/fonts/RoboReg.ttf', 'dc66a0e6527b9e41f390f157a30f96caed33c68d5db0efc6864b4f06d3a41a50'),
+        
+        ('certs/cacert-2018-03-07.pem', 'a8efad67b5e7f02a463c79606cf8a0545f4a6185d94e1c1b647d4a26aeaceb37'),
     ]
 
 def _check_file_integrity(app):
     ''' Check file integrity to make sure all resources loaded
-        to webview won't be modified by an unknown party 
+        to webview won't be modified by an unknown party '''
     for file_name, file_hash in file_hashes:
         file_path = os.path.normpath(os.path.join(app.property("ResPath"), file_name))
         if not os.path.exists(file_path):
             return False
         data = readFile(file_path)
-        print( file_path, hashlib.sha256(data).hexdigest() )
+#         print( file_path, hashlib.sha256(data).hexdigest() )
         if hashlib.sha256(data).hexdigest() != file_hash:
-            return False'''
+            return False
         
     return True
 
@@ -69,7 +71,7 @@ def main():
     
     app = QSingleApplication(sys.argv)
     app.setOrganizationName('PrivatePay')
-    app.setOrganizationDomain('www.getprivatepayd.com')
+    app.setOrganizationDomain('www.privatepay.online')
     app.setApplicationName(APP_NAME)
     app.setProperty("AppPath", app_path)
     app.setProperty("ResPath", resources_path)
